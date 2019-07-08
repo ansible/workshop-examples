@@ -1,0 +1,42 @@
+---
+- name: latest Apache version installed
+  yum:
+    name: httpd
+    state: latest
+  notify: apache-restart
+
+- name: latest firewalld version installed
+  yum:
+    name: firewalld
+    state: latest
+
+- name: firewalld enabled and running
+  service:
+    name: firewalld
+    enabled: true
+    state: started
+
+- name: firewalld permits http service
+  firewalld:
+    service: http
+    permanent: true
+    state: enabled
+    immediate: yes
+
+- name: Apache enabled and running
+  service:
+    name: httpd
+    enabled: true
+    state: started
+
+- name: Ensure proper Apache configuration
+  copy:
+    src: httpd.conf
+    dest: /etc/httpd/conf/httpd.conf
+  notify: apache-restart
+
+- name: deploy index.html
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+  notify: apache-restart
