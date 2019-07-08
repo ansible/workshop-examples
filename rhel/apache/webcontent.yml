@@ -1,0 +1,6 @@
+---
+- name: Deploy Apache web content
+  hosts: all
+
+  roles:
+    - role_webcontent
