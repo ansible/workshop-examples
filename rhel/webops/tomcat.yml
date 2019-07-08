@@ -1,0 +1,32 @@
+---
+- name: Install Tomcat server
+  hosts: all
+  tasks:
+  - name: latest Tomcat version installed
+    yum:
+      name: tomcat
+      state: latest
+  - name: Change Tomcat configuration
+    lineinfile:
+      path: /etc/tomcat/tomcat.conf
+      line: 'JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom"' 
+  - name: latest firewalld version installed
+    yum:
+      name: firewalld
+      state: latest
+  - name: firewalld enabled and running
+    service:
+      name: firewalld
+      enabled: true
+      state: started
+  - name: firewalld permits port 8080 service
+    firewalld:
+      port: 8080/tcp
+      permanent: true
+      state: enabled
+      immediate: yes
+  - name: Tomcat enabled and running
+    service:
+      name: tomcat
+      enabled: true
+      state: started
