@@ -1,0 +1,8 @@
+---
+- name: Deploy Tomcat webapp
+  hosts: all
+  tasks:
+  - name: copy index.jsp to webapp directory
+    copy:
+      src: index.jsp
+      dest: /var/lib/tomcat/webapps/coolapp/
