@@ -1,20 +1,21 @@
 ---
-- name: Deploy Nodejs runtime and App
+- name: Deploy Nodejs App
   hosts: all
   tasks:
-  - name: install nodejs
-    dnf:
-      name: '@nodejs/development'
-      state: present
-  - name: install nodejs systemd unit file
-    file: 
-      src: 
-      dst: 
-  - name: install apache proxy definition
+
+  - name: Make sure webapp dir exists
+    file:
+      path: /var/www/app/
+      state: directory
+      mode: '0755'
+
+  - name: copy node app to webapp directory
     copy:
-      src: nodeproxy.conf
-      dest: /etc/httpd/conf.d/nodeproxy.conf
-  - name: copy index.jsp to webapp directory
-    copy:
-      src: index.jsp
-      dest: /var/lib/tomcat/webapps/coolapp/
+      src: hello.js
+      dest: /var/www/app/hello.js
+    notify: start-nodejs
+
+  - name: start-nodejs
+    systemd:
+      name: node
+      state: restarted
