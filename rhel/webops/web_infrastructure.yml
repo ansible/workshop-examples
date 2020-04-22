@@ -53,7 +53,7 @@
     systemd:
       daemon_reload: yes
 
-  - name: systemd-reload
+  - name: apache-reload
     systemd:
       name: httpd
       state: reloaded
