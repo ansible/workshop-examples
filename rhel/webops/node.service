@@ -1,0 +1,21 @@
+[Unit]
+Description=nodejs app
+
+[Service]
+WorkingDirectory=/var/www/app
+ExecStart=/bin/node hello.js
+Restart=always
+RestartSec=500ms
+
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=nodejs
+
+User=apache
+Group=apache
+
+Environment=NODE_ENV=production
+
+[Install]
+# start node at multi user system level (= sysVinit runlevel 3)
+WantedBy=multi-user.target
