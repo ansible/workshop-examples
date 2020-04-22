@@ -13,6 +13,18 @@
       dest: /etc/httpd/conf.d/nodeproxy.conf
     notify: apache-reload
 
+  - name: Allow SELinux Apache Proxy connect
+    seboolean:
+      name: httpd_can_network_connect
+      state: yes
+      persistent: yes
+
+  - name: Allow SELinux Apache Proxy relay
+    seboolean:
+      name: httpd_can_network_relay
+      state: yes
+      persistent: yes
+
   - name: latest firewalld version installed
     yum:
       name: firewalld
