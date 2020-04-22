@@ -13,11 +13,8 @@
     copy:
       src: hello.js
       dest: /var/www/app/hello.js
-    notify: start-nodejs
 
-  handlers:
-
-  - name: start-nodejs
+  - name: restart nodejs
     systemd:
       name: node
       state: restarted
