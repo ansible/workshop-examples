@@ -1,0 +1,21 @@
+---
+- name: Deploy Nodejs runtime and App
+  hosts: all
+  tasks:
+  - name: install nodejs
+    dnf:
+      name: '@nodejs/development'
+      state: present
+  - name: install nodejs systemd unit file
+    file: 
+      src: node.service
+      dst: /etc/systemd/system/node.service
+    notify: systemd-reload
+  handlers:
+  - name: systemd-reload
+    systemd:
+      daemon_reload: yes
+#  - name: install apache proxy definition
+#    copy:
+#      src: nodeproxy.conf
+#      dest: /etc/httpd/conf.d/nodeproxy.conf
