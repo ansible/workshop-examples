@@ -1,20 +1,52 @@
 ---
-- name: Deploy Nodejs runtime and App
+- name: Deploy infra stack Apache, Nodejs runtime and App
   hosts: all
   tasks:
+  - name: latest Apache version installed
+    yum:
+      name: httpd
+      state: latest
+
+  - name: latest firewalld version installed
+    yum:
+      name: firewalld
+      state: latest
+
+  - name: firewalld enabled and running
+    service:
+      name: firewalld
+      enabled: true
+      state: started
+
+  - name: firewalld permits http service
+    firewalld:
+      service: http
+      permanent: true
+      state: enabled
+      immediate: yes
+
+  - name: Apache enabled and running
+    service:
+      name: httpd
+      enabled: true
+      state: started
+
   - name: install nodejs
     dnf:
       name: '@nodejs/development'
       state: present
+
   - name: install nodejs systemd unit file
     copy:
       src: node.service
       dest: /etc/systemd/system/node.service
     notify: systemd-reload
+
   handlers:
   - name: systemd-reload
     systemd:
       daemon_reload: yes
+
 #  - name: install apache proxy definition
 #    copy:
 #      src: nodeproxy.conf
