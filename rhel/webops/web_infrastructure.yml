@@ -7,6 +7,12 @@
       name: httpd
       state: latest
 
+  - name: install apache proxy definition
+    copy:
+      src: nodeproxy.conf
+      dest: /etc/httpd/conf.d/nodeproxy.conf
+    notify: apache-reload
+
   - name: latest firewalld version installed
     yum:
       name: firewalld
@@ -47,7 +53,7 @@
     systemd:
       daemon_reload: yes
 
-#  - name: install apache proxy definition
-#    copy:
-#      src: nodeproxy.conf
-#      dest: /etc/httpd/conf.d/nodeproxy.conf
+  - name: systemd-reload
+    systemd:
+      name: httpd
+      state: reloaded
