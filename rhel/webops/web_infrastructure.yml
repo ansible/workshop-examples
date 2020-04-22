@@ -7,7 +7,7 @@
       name: '@nodejs/development'
       state: present
   - name: install nodejs systemd unit file
-    file:
+    copy:
       src: node.service
       dest: /etc/systemd/system/node.service
     notify: systemd-reload
