@@ -1,6 +1,6 @@
 ---
 - name: Deploy Nodejs App
-  hosts: all
+  hosts: web
   tasks:
 
   - name: Make sure webapp dir exists

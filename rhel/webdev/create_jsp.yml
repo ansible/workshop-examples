@@ -1,6 +1,6 @@
 ---
 - name: Deploy Tomcat webapp
-  hosts: all
+  hosts: web
   tasks:
   - name: copy index.jsp to webapp directory
     copy:
