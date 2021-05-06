@@ -14,7 +14,4 @@
       src: hello.js
       dest: /var/www/app/hello.js
 
-  - name: restart nodejs
-    systemd:
-      name: node
-      state: restarted
+  
