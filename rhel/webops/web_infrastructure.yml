@@ -7,6 +7,16 @@
       name: httpd
       state: latest
 
+  - name: latest python2-dnf version installed
+    yum:
+      name: python2-dnf
+      state: latest
+  
+  - name: latest python3-dnf version installed
+    yum:
+      name: python3-dnf
+      state: latest
+  
   - name: install apache proxy definition
     copy:
       src: nodeproxy.conf
